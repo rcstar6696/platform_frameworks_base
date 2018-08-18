@@ -752,6 +752,8 @@ public final class SystemServer {
 
         boolean isWatch = context.getPackageManager().hasSystemFeature(
                 PackageManager.FEATURE_WATCH);
+                
+        boolean disableConsumerIr = SystemProperties.getBoolean("config.disable_consumerir", false);
 
         // For debugging RescueParty
         if (Build.IS_DEBUGGABLE && SystemProperties.getBoolean("debug.crash_system", false)) {
@@ -834,7 +836,7 @@ public final class SystemServer {
             ServiceManager.addService("vibrator", vibrator);
             traceEnd();
 
-            if (!isWatch) {
+            if (!isWatch && !disableConsumerIr) {
                 traceBeginAndSlog("StartConsumerIrService");
                 consumerIr = new ConsumerIrService(context);
                 ServiceManager.addService(Context.CONSUMER_IR_SERVICE, consumerIr);
