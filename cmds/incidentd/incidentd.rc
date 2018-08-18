@@ -14,8 +14,7 @@
 
 service incidentd /system/bin/incidentd
     class main
-    user incidentd
-    group incidentd log readproc
+    group log readproc
     capabilities KILL SYS_PTRACE
 
 on post-fs-data
